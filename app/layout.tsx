@@ -3,8 +3,8 @@ import "./globals.css";
 import { AuthProvider } from "@/context/auth-context";
 
 export const metadata: Metadata = {
-  title: "Draftly — Team Document Workspace",
-  description: "Your team's documents, without the clutter. Powered by Next.js and MongoDB.",
+  title: "Draftly — Neo-Skeuomorphic Document Workspace",
+  description: "Tactile document workspace powered by Next.js and MongoDB.",
 };
 
 export default function RootLayout({
@@ -13,8 +13,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="h-full antialiased dark">
-      <body className="min-h-full flex flex-col bg-[#0B0D12] text-[#F3F5F8]">
+    <html lang="en" className="h-full antialiased">
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap"
+          rel="stylesheet"
+        />
+      </head>
+      <body className="min-h-full flex flex-col bg-[#F4EFEA] text-[#2D251E] font-['Poppins',sans-serif]">
         <AuthProvider>{children}</AuthProvider>
       </body>
     </html>

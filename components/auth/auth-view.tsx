@@ -13,6 +13,9 @@ import {
   AlertCircle,
   Loader2,
   Users,
+  Compass,
+  Layers,
+  Sliders,
 } from "lucide-react";
 
 export function AuthView() {
@@ -68,116 +71,166 @@ export function AuthView() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0B0D12] text-[#F3F5F8] flex flex-col justify-center items-center px-4 py-12 relative overflow-hidden">
-      {/* Background radial gradient glow */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] bg-[#8B7CFF]/5 rounded-full blur-[140px] pointer-events-none" />
-
-      {/* Brand Header */}
-      <div className="text-center mb-8 relative z-10">
-        <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-[#151A23] border border-[#262D3A] text-xs text-[#A1AABA] mb-4">
-          <Sparkles className="w-3.5 h-3.5 text-[#8B7CFF]" />
-          <span>MongoDB Native Document Workspace</span>
-        </div>
-        <div className="flex items-center justify-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#8B7CFF] to-[#7665F5] flex items-center justify-center shadow-lg shadow-[#8B7CFF]/20">
-            <FileText className="w-5 h-5 text-white" />
+    <div className="min-h-screen bg-[#F4EFEA] text-[#2D251E] flex flex-col justify-center items-center px-4 py-10 relative overflow-hidden select-none">
+      {/* Neo-Skeuomorphic Board Header (Matching Reference Image) */}
+      <div className="w-full max-w-xl mb-6">
+        <div className="flex items-center justify-between border-b-2 border-[#D5C9B8] pb-3 mb-2">
+          <div>
+            <div className="flex items-center gap-2">
+              <span className="text-[11px] font-bold uppercase tracking-wider text-[#9C8E80] tactile-tag px-2 py-0.5 rounded">
+                Foundations & Controls
+              </span>
+              <span className="text-[11px] font-mono text-[#C97D52] bg-[#F7EBE4] border border-[#DE956C]/50 px-2 py-0.5 rounded-full font-semibold">
+                Neo-Skeuomorphic Tactile System
+              </span>
+            </div>
+            <h1 className="text-2xl sm:text-3xl font-extrabold text-[#2D251E] tracking-tight mt-1.5 flex items-center gap-2.5">
+              <span>Draftly Workspace</span>
+              <span className="text-xs font-normal text-[#74675B] bg-[#EFE8DE] px-2.5 py-1 rounded-md border border-[#D5C9B8]">
+                MongoDB v7.0
+              </span>
+            </h1>
+            <p className="text-xs text-[#74675B] mt-0.5">
+              Tactile paper-and-copper interface for team document management.
+            </p>
           </div>
-          <h1 className="text-3xl font-semibold tracking-tight text-[#F3F5F8]">
-            Draftly
-          </h1>
+
+          {/* Decorative origami folded stamp */}
+          <div className="hidden sm:flex flex-col items-center justify-center w-14 h-14 rounded-xl tactile-elevation-2 border border-[#C87B50]/40 bg-gradient-to-br from-[#FAF7F2] to-[#EFE8DE] relative">
+            <div className="w-8 h-8 rounded-full tactile-avatar-ring flex items-center justify-center">
+              <Sparkles className="w-4 h-4 text-white" />
+            </div>
+          </div>
         </div>
-        <p className="text-sm text-[#A1AABA] mt-2 max-w-sm mx-auto">
-          Your team&apos;s documents, without the clutter.
-        </p>
       </div>
 
-      <div className="w-full max-w-md relative z-10 space-y-6">
-        {/* Main Card */}
-        <div className="bg-[#151A23] border border-[#262D3A] rounded-2xl p-6 sm:p-8 shadow-2xl backdrop-blur-sm">
-          {/* Tabs */}
-          <div className="flex bg-[#10131A] p-1 rounded-xl border border-[#262D3A]/60 mb-6">
+      <div className="w-full max-w-xl space-y-6">
+        {/* Main Authentication Card - Raised Tactile Surface (Level 2 Elevation) */}
+        <div className="tactile-elevation-2 rounded-2xl p-6 sm:p-8 bg-[#FAF7F2] border border-[#E2D9CC] relative">
+          {/* Subtle paper top ribbon */}
+          <div className="flex items-center justify-between mb-6">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md tactile-tag text-[11px]">
+              <FileText className="w-3.5 h-3.5 text-[#C97D52]" />
+              <span>Identity Verification</span>
+            </div>
+            <div className="text-[11px] text-[#9C8E80] font-mono">
+              Elevation: Level 2
+            </div>
+          </div>
+
+          {/* Tactile Inset Tabs (Matching Styleguide Navigation Tabs) */}
+          <div className="tactile-inset p-1.5 rounded-xl flex items-center gap-1.5 mb-6">
             <button
               type="button"
               onClick={() => {
                 setMode("login");
                 setError(null);
               }}
-              className={`flex-1 py-2 text-xs font-medium rounded-lg transition-all ${
+              className={`flex-1 py-2 px-3 text-xs font-bold rounded-lg transition-all flex items-center justify-center gap-1.5 ${
                 mode === "login"
-                  ? "bg-[#151A23] text-[#F3F5F8] shadow-sm border border-[#262D3A]"
-                  : "text-[#6F7A8C] hover:text-[#A1AABA]"
+                  ? "bg-[#FFFFFF] text-[#2D251E] tactile-elevation-1 border border-[#C97D52]/40"
+                  : "text-[#74675B] hover:text-[#2D251E]"
               }`}
             >
-              Sign In
+              <div
+                className={`w-2 h-2 rounded-full ${
+                  mode === "login" ? "bg-[#C97D52]" : "bg-[#D5C9B8]"
+                }`}
+              />
+              <span>Sign In</span>
             </button>
+
             <button
               type="button"
               onClick={() => {
                 setMode("register");
                 setError(null);
               }}
-              className={`flex-1 py-2 text-xs font-medium rounded-lg transition-all ${
+              className={`flex-1 py-2 px-3 text-xs font-bold rounded-lg transition-all flex items-center justify-center gap-1.5 ${
                 mode === "register"
-                  ? "bg-[#151A23] text-[#F3F5F8] shadow-sm border border-[#262D3A]"
-                  : "text-[#6F7A8C] hover:text-[#A1AABA]"
+                  ? "bg-[#FFFFFF] text-[#2D251E] tactile-elevation-1 border border-[#C97D52]/40"
+                  : "text-[#74675B] hover:text-[#2D251E]"
               }`}
             >
-              Create Account
+              <div
+                className={`w-2 h-2 rounded-full ${
+                  mode === "register" ? "bg-[#C97D52]" : "bg-[#D5C9B8]"
+                }`}
+              />
+              <span>Create Account</span>
             </button>
           </div>
 
-          {/* Error Banner */}
+          {/* Error Banner with Terracotta Tactile Styling */}
           {error && (
-            <div className="flex items-start gap-2.5 p-3 rounded-lg bg-[#F16F78]/10 border border-[#F16F78]/25 text-[#F16F78] text-xs mb-5">
-              <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />
+            <div className="flex items-start gap-2.5 p-3.5 rounded-xl bg-[#FBEBE8] border-2 border-[#E5877A] text-[#BA4E3E] text-xs font-medium mb-5 shadow-inner">
+              <AlertCircle className="w-4 h-4 shrink-0 mt-0.5 text-[#BA4E3E]" />
               <span>{error}</span>
             </div>
           )}
 
-          {/* Form */}
+          {/* Form with Neo-Skeuomorphic Sunken Text Fields */}
           <form onSubmit={handleSubmit} className="space-y-4">
             {mode === "register" && (
               <div>
-                <label className="block text-xs font-medium text-[#A1AABA] mb-1.5">
-                  Full Name
-                </label>
-                <div className="relative">
-                  <UserIcon className="w-4 h-4 text-[#6F7A8C] absolute left-3 top-1/2 -translate-y-1/2" />
+                <div className="flex items-center justify-between mb-1.5">
+                  <label className="text-xs font-bold text-[#4A3F35]">
+                    Full Name
+                  </label>
+                  <span className="text-[10px] text-[#9C8E80] font-mono">
+                    Text Field: Default
+                  </span>
+                </div>
+                <div className="relative tactile-inset rounded-xl tactile-input-focus transition-all duration-150">
+                  <UserIcon className="w-4 h-4 text-[#9C8E80] absolute left-3.5 top-1/2 -translate-y-1/2" />
                   <input
                     type="text"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     placeholder="Alex Morgan"
                     required
-                    className="w-full bg-[#10131A] border border-[#262D3A] rounded-xl pl-9 pr-3 py-2.5 text-sm text-[#F3F5F8] placeholder-[#6F7A8C] focus:outline-none focus:border-[#8B7CFF] transition-colors"
+                    className="w-full bg-transparent pl-10 pr-3.5 py-2.5 text-sm font-medium text-[#2D251E] placeholder-[#9C8E80] focus:outline-none"
                   />
                 </div>
               </div>
             )}
 
             <div>
-              <label className="block text-xs font-medium text-[#A1AABA] mb-1.5">
-                Email Address
-              </label>
-              <div className="relative">
-                <Mail className="w-4 h-4 text-[#6F7A8C] absolute left-3 top-1/2 -translate-y-1/2" />
+              <div className="flex items-center justify-between mb-1.5">
+                <label className="text-xs font-bold text-[#4A3F35]">
+                  Email Address
+                </label>
+                <span className="text-[10px] text-[#9C8E80] font-mono">
+                  Text Field: {email ? "Active" : "Default"}
+                </span>
+              </div>
+              <div className="relative tactile-inset rounded-xl tactile-input-focus transition-all duration-150">
+                <Mail className="w-4 h-4 text-[#9C8E80] absolute left-3.5 top-1/2 -translate-y-1/2" />
                 <input
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="alex@draftly.demo"
                   required
-                  className="w-full bg-[#10131A] border border-[#262D3A] rounded-xl pl-9 pr-3 py-2.5 text-sm text-[#F3F5F8] placeholder-[#6F7A8C] focus:outline-none focus:border-[#8B7CFF] transition-colors"
+                  className="w-full bg-transparent pl-10 pr-3.5 py-2.5 text-sm font-medium text-[#2D251E] placeholder-[#9C8E80] focus:outline-none"
                 />
               </div>
+              <p className="text-[11px] text-[#74675B] mt-1 pl-1 italic">
+                We&apos;ll never share your email.
+              </p>
             </div>
 
             <div>
-              <label className="block text-xs font-medium text-[#A1AABA] mb-1.5">
-                Password
-              </label>
-              <div className="relative">
-                <Lock className="w-4 h-4 text-[#6F7A8C] absolute left-3 top-1/2 -translate-y-1/2" />
+              <div className="flex items-center justify-between mb-1.5">
+                <label className="text-xs font-bold text-[#4A3F35]">
+                  Password
+                </label>
+                <span className="text-[10px] text-[#9C8E80] font-mono">
+                  Min 6 chars
+                </span>
+              </div>
+              <div className="relative tactile-inset rounded-xl tactile-input-focus transition-all duration-150">
+                <Lock className="w-4 h-4 text-[#9C8E80] absolute left-3.5 top-1/2 -translate-y-1/2" />
                 <input
                   type="password"
                   value={password}
@@ -185,107 +238,145 @@ export function AuthView() {
                   placeholder="••••••••"
                   required
                   minLength={6}
-                  className="w-full bg-[#10131A] border border-[#262D3A] rounded-xl pl-9 pr-3 py-2.5 text-sm text-[#F3F5F8] placeholder-[#6F7A8C] focus:outline-none focus:border-[#8B7CFF] transition-colors"
+                  className="w-full bg-transparent pl-10 pr-3.5 py-2.5 text-sm font-medium text-[#2D251E] placeholder-[#9C8E80] focus:outline-none font-mono"
                 />
               </div>
-              <p className="text-[11px] text-[#6F7A8C] mt-1">
-                Minimum 6 characters
-              </p>
             </div>
 
-            <button
-              type="submit"
-              disabled={isSubmitting}
-              className="w-full mt-2 bg-[#8B7CFF] hover:bg-[#7665F5] disabled:opacity-50 text-white font-medium text-sm py-2.5 px-4 rounded-xl transition-all duration-150 flex items-center justify-center gap-2 shadow-lg shadow-[#8B7CFF]/20"
-            >
-              {isSubmitting ? (
-                <>
-                  <Loader2 className="w-4 h-4 animate-spin" />
-                  <span>Processing...</span>
-                </>
-              ) : mode === "login" ? (
-                <>
-                  <span>Sign In</span>
-                  <ArrowRight className="w-4 h-4" />
-                </>
-              ) : (
-                <>
-                  <span>Create Account</span>
-                  <ArrowRight className="w-4 h-4" />
-                </>
-              )}
-            </button>
+            {/* Action Buttons Row matching "Submit Order" and "Cancel" in Reference Image */}
+            <div className="pt-2 flex flex-col sm:flex-row gap-3">
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="flex-1 py-3 px-5 rounded-xl font-bold text-sm tactile-btn-copper flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
+              >
+                {isSubmitting ? (
+                  <>
+                    <Loader2 className="w-4 h-4 animate-spin text-white" />
+                    <span>Processing...</span>
+                  </>
+                ) : mode === "login" ? (
+                  <>
+                    <span>Submit Sign In</span>
+                    <ArrowRight className="w-4 h-4 text-white" />
+                  </>
+                ) : (
+                  <>
+                    <span>Submit Order / Account</span>
+                    <ArrowRight className="w-4 h-4 text-white" />
+                  </>
+                )}
+              </button>
+
+              <button
+                type="button"
+                onClick={() => {
+                  setName("");
+                  setEmail("");
+                  setPassword("");
+                  setError(null);
+                }}
+                className="py-3 px-5 rounded-xl font-bold text-sm tactile-btn-secondary cursor-pointer"
+              >
+                Cancel / Reset
+              </button>
+            </div>
           </form>
         </div>
 
-        {/* Quick Demo Accounts Card */}
-        <div className="bg-[#151A23]/60 border border-[#262D3A] rounded-2xl p-5 backdrop-blur-sm">
-          <div className="flex items-center gap-2 mb-3 text-xs font-medium text-[#A1AABA]">
-            <Users className="w-4 h-4 text-[#8B7CFF]" />
-            <span>Instant Demo Accounts (1-Click Login)</span>
+        {/* Demo Accounts Section - Styled as "DATA DISPLAY / AVATARS" from Reference Board */}
+        <div className="tactile-elevation-1 rounded-2xl p-5 sm:p-6 bg-[#FAF7F2] border border-[#E2D9CC]">
+          <div className="flex items-center justify-between mb-3 border-b border-[#E2D9CC] pb-2.5">
+            <div className="flex items-center gap-2">
+              <div className="w-6 h-6 rounded-full tactile-avatar-ring flex items-center justify-center">
+                <Users className="w-3 h-3 text-white" />
+              </div>
+              <h2 className="text-xs font-bold text-[#2D251E] tracking-wider uppercase">
+                Seeded Identity Switcher (P0 Demo Specification)
+              </h2>
+            </div>
+            <span className="text-[10px] font-mono text-[#C97D52] bg-[#F7EBE4] px-2 py-0.5 rounded border border-[#DE956C]/40 font-semibold">
+              1-Click Auth
+            </span>
           </div>
-          <p className="text-xs text-[#6F7A8C] mb-3">
-            Switch between seeded accounts to test document creation, access control, and sharing:
+
+          <p className="text-xs text-[#74675B] mb-4">
+            Instant 1-click test login for reviewers to verify ownership and access control boundaries:
           </p>
-          <div className="space-y-2">
+
+          <div className="space-y-2.5">
             {demoAccounts.map((account) => {
               const isLoadingThis = loadingDemoEmail === account.email;
               return (
-                <button
+                <div
                   key={account.email}
-                  type="button"
-                  disabled={loadingDemoEmail !== null || isSubmitting}
-                  onClick={() => handleDemoLogin(account.email)}
-                  className="w-full text-left p-3 rounded-xl bg-[#10131A] hover:bg-[#1C2330] border border-[#262D3A] transition-all flex items-center justify-between group disabled:opacity-50"
+                  className="p-3.5 rounded-xl bg-[#FFFFFF] border border-[#E2D9CC] tactile-elevation-1 flex flex-col sm:flex-row sm:items-center justify-between gap-3 hover:border-[#C97D52] transition-all"
                 >
                   <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-lg bg-[#151A23] border border-[#262D3A] flex items-center justify-center text-xs font-semibold text-[#8B7CFF] group-hover:border-[#8B7CFF]/50 transition-colors">
+                    {/* Concentric tactile avatar medal */}
+                    <div className="w-9 h-9 rounded-full tactile-avatar-ring flex items-center justify-center text-xs font-bold text-white shadow-sm shrink-0">
                       {account.name.split(" ").map((n) => n[0]).join("")}
                     </div>
+
                     <div>
                       <div className="flex items-center gap-2">
-                        <span className="text-xs font-medium text-[#F3F5F8]">
+                        <span className="text-xs font-bold text-[#2D251E]">
                           {account.name}
                         </span>
-                        <span className="text-[10px] px-1.5 py-0.5 rounded bg-[#8B7CFF]/15 text-[#8B7CFF] border border-[#8B7CFF]/30">
+                        <span className="text-[10px] px-2 py-0.5 rounded font-semibold text-[#8C4F2A] bg-[#F7EBE4] border border-[#C87B50]/40">
                           {account.role}
                         </span>
                       </div>
-                      <p className="text-[11px] text-[#6F7A8C]">
+                      <div className="text-[11px] text-[#74675B] font-mono mt-0.5">
                         {account.email}
-                      </p>
+                      </div>
+                      <div className="text-[11px] text-[#9C8E80] mt-0.5">
+                        {account.description}
+                      </div>
                     </div>
                   </div>
-                  <div>
+
+                  <button
+                    type="button"
+                    disabled={loadingDemoEmail !== null || isSubmitting}
+                    onClick={() => handleDemoLogin(account.email)}
+                    className="py-1.5 px-3.5 rounded-lg text-xs font-bold tactile-btn-copper shrink-0 flex items-center justify-center gap-1.5 disabled:opacity-50 cursor-pointer"
+                  >
                     {isLoadingThis ? (
-                      <Loader2 className="w-4 h-4 text-[#8B7CFF] animate-spin" />
+                      <Loader2 className="w-3.5 h-3.5 animate-spin text-white" />
                     ) : (
-                      <ArrowRight className="w-4 h-4 text-[#6F7A8C] group-hover:text-[#F3F5F8] group-hover:translate-x-0.5 transition-all" />
+                      <>
+                        <span>Select User</span>
+                        <ArrowRight className="w-3 h-3 text-white" />
+                      </>
                     )}
-                  </div>
-                </button>
+                  </button>
+                </div>
               );
             })}
           </div>
         </div>
 
-        {/* Feature summary */}
-        <div className="flex items-center justify-center gap-4 text-xs text-[#6F7A8C]">
-          <span className="flex items-center gap-1.5">
-            <CheckCircle2 className="w-3.5 h-3.5 text-[#39C98A]" />
-            MongoDB Storage
-          </span>
-          <span className="flex items-center gap-1.5">
-            <CheckCircle2 className="w-3.5 h-3.5 text-[#39C98A]" />
-            Bcrypt Hashing
-          </span>
-          <span className="flex items-center gap-1.5">
-            <CheckCircle2 className="w-3.5 h-3.5 text-[#39C98A]" />
-            JWT Session Cookie
-          </span>
+        {/* Tactile System Micro-Legend (Reference Image Foundations) */}
+        <div className="flex flex-wrap items-center justify-between gap-2 text-[11px] text-[#74675B] px-2">
+          <div className="flex items-center gap-1.5 font-medium">
+            <span className="w-2.5 h-2.5 rounded-sm bg-[#C97D52] shadow-sm inline-block" />
+            <span>Copper: #C97D52</span>
+          </div>
+          <div className="flex items-center gap-1.5 font-medium">
+            <span className="w-2.5 h-2.5 rounded-sm bg-[#FAF7F2] border border-[#D5C9B8] shadow-sm inline-block" />
+            <span>Paper: #FAF7F2</span>
+          </div>
+          <div className="flex items-center gap-1.5 font-medium">
+            <span className="w-2.5 h-2.5 rounded-sm bg-[#EFE8DE] border border-[#D5C9B8] inline-block shadow-inner" />
+            <span>Inset Deboss: #EFE8DE</span>
+          </div>
+          <div className="flex items-center gap-1.5 font-medium text-[#4E9A68]">
+            <CheckCircle2 className="w-3.5 h-3.5" />
+            <span>MongoDB Connected</span>
+          </div>
         </div>
       </div>
     </div>
   );
 }
-

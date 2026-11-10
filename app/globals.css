@@ -1,67 +1,210 @@
 @import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
 
 :root {
-  --background: #0B0D12;
-  --foreground: #F3F5F8;
-  --sidebar: #10131A;
-  --surface: #151A23;
-  --surface-hover: #1C2330;
-  --editor: #171B24;
-  --border: #262D3A;
-  --text-primary: #F3F5F8;
-  --text-secondary: #A1AABA;
-  --text-muted: #6F7A8C;
-  --accent: #8B7CFF;
-  --accent-hover: #7665F5;
-  --success: #39C98A;
-  --warning: #F2B866;
-  --danger: #F16F78;
+  /* Neo-Skeuomorphic Tactile Palette from Reference Board */
+  --canvas: #F4EFEA;
+  --surface-base: #FAF7F2;
+  --surface-raised: #FFFFFF;
+  --surface-inset: #EFE8DE;
+  --surface-sunken: #E7DFD3;
+  --border-subtle: #E2D9CC;
+  --border-tactile: #D5C9B8;
+  
+  /* Text & Ink */
+  --ink-primary: #2D251E;
+  --ink-secondary: #74675B;
+  --ink-muted: #9C8E80;
+
+  /* Copper / Terracotta / Burnished Bronze Accent */
+  --copper: #C97D52;
+  --copper-light: #DE956C;
+  --copper-dark: #A95D33;
+  --copper-border: #C87B50;
+  --copper-glow: rgba(201, 125, 82, 0.32);
+  --copper-subtle: rgba(201, 125, 82, 0.12);
+
+  /* Status Tokens */
+  --success-tactile: #4E9A68;
+  --warning-tactile: #D48B38;
+  --error-tactile: #BA4E3E;
+  --error-bg: #FBEBE8;
+  --error-border: #E5877A;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-sidebar: var(--sidebar);
-  --color-surface: var(--surface);
-  --color-surface-hover: var(--surface-hover);
-  --color-editor: var(--editor);
-  --color-border: var(--border);
-  --color-text-primary: var(--text-primary);
-  --color-text-secondary: var(--text-secondary);
-  --color-text-muted: var(--text-muted);
-  --color-accent: var(--accent);
-  --color-accent-hover: var(--accent-hover);
-  --color-success: var(--success);
-  --color-warning: var(--warning);
-  --color-danger: var(--danger);
-  --font-sans: var(--font-geist-sans), Inter, system-ui, sans-serif;
-  --font-mono: var(--font-geist-mono), monospace;
+  --color-canvas: var(--canvas);
+  --color-surface-base: var(--surface-base);
+  --color-surface-raised: var(--surface-raised);
+  --color-surface-inset: var(--surface-inset);
+  --color-surface-sunken: var(--surface-sunken);
+  --color-border-subtle: var(--border-subtle);
+  --color-border-tactile: var(--border-tactile);
+  
+  --color-ink-primary: var(--ink-primary);
+  --color-ink-secondary: var(--ink-secondary);
+  --color-ink-muted: var(--ink-muted);
+  
+  --color-copper: var(--copper);
+  --color-copper-light: var(--copper-light);
+  --color-copper-dark: var(--copper-dark);
+  --color-copper-border: var(--copper-border);
+  
+  --font-sans: 'Poppins', system-ui, -apple-system, sans-serif;
 }
 
+/* Background canvas matching the linen/bone paper board */
 body {
-  background-color: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-sans);
+  background-color: var(--canvas);
+  color: var(--ink-primary);
+  font-family: 'Poppins', system-ui, -apple-system, sans-serif;
   min-height: 100vh;
   margin: 0;
+  background-image: 
+    radial-gradient(#E5DCD0 0.75px, transparent 0.75px),
+    radial-gradient(#E5DCD0 0.75px, #F4EFEA 0.75px);
+  background-size: 30px 30px;
+  background-position: 0 0, 15px 15px;
   -webkit-font-smoothing: antialiased;
 }
 
-/* Custom scrollbars */
-::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+/* Tactile Neo-Skeuomorphic Utility Classes based on the Styleguide */
+
+/* Elevation Level 1 (Low) */
+.tactile-elevation-1 {
+  background-color: var(--surface-raised);
+  border: 1px solid var(--border-subtle);
+  box-shadow: 
+    0px 4px 8px 0px rgba(70, 50, 35, 0.08),
+    0px 1px 2px 0px rgba(70, 50, 35, 0.05),
+    inset 0 1px 0 rgba(255, 255, 255, 0.95);
 }
 
-::-webkit-scrollbar-track {
-  background: transparent;
+/* Elevation Level 2 (Medium) */
+.tactile-elevation-2 {
+  background-color: var(--surface-raised);
+  border: 1px solid var(--border-subtle);
+  box-shadow: 
+    0px 8px 16px 0px rgba(70, 50, 35, 0.12),
+    0px 2px 4px 0px rgba(70, 50, 35, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.95);
 }
 
-::-webkit-scrollbar-thumb {
-  background: var(--border);
-  border-radius: 3px;
+/* Elevation Level 3 (High) */
+.tactile-elevation-3 {
+  background-color: var(--surface-raised);
+  border: 1px solid var(--border-subtle);
+  box-shadow: 
+    0px 16px 24px 0px rgba(70, 50, 35, 0.16),
+    0px 4px 8px 0px rgba(70, 50, 35, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.95);
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background: #394254;
+/* Inset / Debossed Sunken Channel (Text fields, tab bars, track) */
+.tactile-inset {
+  background-color: var(--surface-inset);
+  border: 1px solid var(--border-subtle);
+  box-shadow: 
+    inset 2px 2px 5px rgba(80, 55, 40, 0.13),
+    inset -2px -2px 5px rgba(255, 255, 255, 0.85);
+}
+
+/* Deeper Sunken Inset */
+.tactile-inset-deep {
+  background-color: var(--surface-sunken);
+  border: 1px solid #D5C8B7;
+  box-shadow: 
+    inset 3px 3px 6px rgba(70, 45, 30, 0.16),
+    inset -2px -2px 5px rgba(255, 255, 255, 0.9);
+}
+
+/* Focused Input Frame with Copper Halo */
+.tactile-input-focus:focus-within {
+  border-color: var(--copper);
+  box-shadow: 
+    0 0 0 3px var(--copper-glow),
+    inset 1px 1px 3px rgba(80, 55, 40, 0.1),
+    inset -1px -1px 3px rgba(255, 255, 255, 0.8);
+}
+
+/* Primary Copper Button (Exact "Submit Order" button from Board) */
+.tactile-btn-copper {
+  background: linear-gradient(180deg, #DA8F65 0%, #BA6D42 100%);
+  color: #FFFFFF;
+  border: 1px solid #A45A31;
+  box-shadow: 
+    0 4px 10px rgba(186, 109, 66, 0.35),
+    0 1px 2px rgba(90, 50, 25, 0.2),
+    inset 0 1px 1px rgba(255, 255, 255, 0.45),
+    inset 0 -2px 0 rgba(110, 50, 20, 0.3);
+  text-shadow: 0 1px 1px rgba(90, 45, 20, 0.3);
+  transition: all 120ms ease;
+  font-family: 'Poppins', system-ui, sans-serif;
+}
+
+.tactile-btn-copper:hover {
+  background: linear-gradient(180deg, #E2986F 0%, #C37448 100%);
+  box-shadow: 
+    0 6px 14px rgba(186, 109, 66, 0.45),
+    0 2px 4px rgba(90, 50, 25, 0.25),
+    inset 0 1px 1px rgba(255, 255, 255, 0.55),
+    inset 0 -2px 0 rgba(110, 50, 20, 0.3);
+  transform: translateY(-1px);
+}
+
+.tactile-btn-copper:active {
+  background: linear-gradient(180deg, #B2653B 0%, #9C522B 100%);
+  box-shadow: 
+    inset 2px 2px 5px rgba(60, 30, 10, 0.4),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.2);
+  transform: translateY(1px);
+}
+
+/* Secondary Button (Exact "Cancel" button from Board) */
+.tactile-btn-secondary {
+  background-color: #FAF6F1;
+  border: 2px solid var(--copper-border);
+  color: #8C4F2A;
+  box-shadow: 
+    0 2px 5px rgba(90, 65, 45, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  transition: all 120ms ease;
+  font-family: 'Poppins', system-ui, sans-serif;
+}
+
+.tactile-btn-secondary:hover {
+  background-color: #FFF9F3;
+  border-color: #B5673A;
+  color: #723C1C;
+  box-shadow: 
+    0 4px 8px rgba(90, 65, 45, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.95);
+  transform: translateY(-1px);
+}
+
+.tactile-btn-secondary:active {
+  background-color: #EFE7DC;
+  box-shadow: inset 1px 1px 3px rgba(80, 55, 40, 0.15);
+  transform: translateY(1px);
+}
+
+/* Styleguide Ribbon / Header Tag */
+.tactile-tag {
+  background: #EFE7DC;
+  border: 1px solid var(--border-subtle);
+  color: var(--ink-secondary);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  box-shadow: 
+    0 1px 3px rgba(70, 50, 35, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.85);
+}
+
+/* Copper Medal Avatar Ring */
+.tactile-avatar-ring {
+  background: radial-gradient(circle, #FAF7F2 58%, #DDA07D 59%, #BA6E44 85%, #924E25 100%);
+  box-shadow: 
+    0 4px 8px rgba(130, 75, 40, 0.22),
+    inset 0 1px 1px rgba(255, 255, 255, 0.7);
 }
