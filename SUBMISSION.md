@@ -2,9 +2,10 @@
 
 ### Project Details
 - **Project Name:** Draftly
+- **Live Deployment URL:** [https://docement.vercel.app/](https://docement.vercel.app/)
 - **Project Overview Video:** [https://www.loom.com/share/5b00c89c7c724b2ba750731156a6c8f6](https://www.loom.com/share/5b00c89c7c724b2ba750731156a6c8f6)
 - **Timebox:** Delivered within 4–6 hours
-- **Local URL:** `http://localhost:3000`
+- **Local Dev URL:** `http://localhost:3000`
 - **Database:** MongoDB (`mongodb://127.0.0.1:27017/draftly`)
 - **Primary Aesthetic:** Neo-Skeuomorphic Tactile Paper & Copper Board + Poppins Typography
 

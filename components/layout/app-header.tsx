@@ -10,6 +10,7 @@ import {
   Check,
   Loader2,
   Sparkles,
+  ExternalLink,
 } from "lucide-react";
 
 export function AppHeader() {
@@ -58,9 +59,22 @@ export function AppHeader() {
           <FileText className="w-5 h-5 text-white" />
         </div>
         <div>
-          <span className="font-extrabold text-lg text-[#2D251E] tracking-tight">
-            Draftly
-          </span>
+          <div className="flex items-center gap-2">
+            <span className="font-extrabold text-lg text-[#2D251E] tracking-tight">
+              Draftly
+            </span>
+            <a
+              href="https://docement.vercel.app/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hidden xs:inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#EBF5EE] text-[#4E9A68] border border-[#4E9A68]/30 hover:bg-[#DDF0E2] transition-colors"
+              title="Open Live Vercel Deployment (https://docement.vercel.app/)"
+            >
+              <span className="w-1.5 h-1.5 rounded-full bg-[#4E9A68] animate-pulse" />
+              <span>Live</span>
+              <ExternalLink className="w-2.5 h-2.5 opacity-70" />
+            </a>
+          </div>
           <div className="text-[11px] text-[#74675B] font-medium leading-none">
             Team Workspace
           </div>

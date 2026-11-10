@@ -4,8 +4,10 @@
 > **Aesthetic:** Neo-Skeuomorphic Tactile Paper & Copper System with Poppins Typography.  
 > **Database:** MongoDB & Mongoose.  
 > **Editor:** Tiptap Structured Rich-Text JSON.  
+> **Live Deployment:** [https://docement.vercel.app/](https://docement.vercel.app/)  
 > **Project Overview Video:** [https://www.loom.com/share/5b00c89c7c724b2ba750731156a6c8f6](https://www.loom.com/share/5b00c89c7c724b2ba750731156a6c8f6)
 
+[![Live App on Vercel](https://img.shields.io/badge/Vercel_Live_App-Visit_Site-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://docement.vercel.app/)
 [![Watch Project Walkthrough on Loom](https://img.shields.io/badge/Loom_Walkthrough-Watch_Video-E25950?style=for-the-badge&logo=loom&logoColor=white)](https://www.loom.com/share/5b00c89c7c724b2ba750731156a6c8f6)
 
 ---
