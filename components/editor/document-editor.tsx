@@ -9,6 +9,15 @@ import TaskList from "@tiptap/extension-task-list";
 import TaskItem from "@tiptap/extension-task-item";
 import TextAlign from "@tiptap/extension-text-align";
 import Link from "@tiptap/extension-link";
+import { Table } from "@tiptap/extension-table";
+import { TableRow } from "@tiptap/extension-table-row";
+import { TableHeader } from "@tiptap/extension-table-header";
+import { TableCell } from "@tiptap/extension-table-cell";
+import { Subscript } from "@tiptap/extension-subscript";
+import { Superscript } from "@tiptap/extension-superscript";
+import { Image } from "@tiptap/extension-image";
+import { TextStyle } from "@tiptap/extension-text-style";
+import { Color } from "@tiptap/extension-color";
 import { DocumentItem } from "../documents/document-card";
 import { EditorToolbar } from "./editor-toolbar";
 import { ShareDialog } from "../sharing/share-dialog";
@@ -142,6 +151,20 @@ export function DocumentEditor({ documentId, onBack }: DocumentEditorProps) {
           class: "text-[#C97D52] underline underline-offset-4 cursor-pointer",
         },
       }),
+      Table.configure({
+        resizable: true,
+      }),
+      TableRow,
+      TableHeader,
+      TableCell,
+      Subscript,
+      Superscript,
+      Image.configure({
+        inline: true,
+        allowBase64: true,
+      }),
+      TextStyle,
+      Color,
     ],
     content: doc?.content || { type: "doc", content: [{ type: "paragraph" }] },
     editorProps: {
@@ -252,6 +275,25 @@ export function DocumentEditor({ documentId, onBack }: DocumentEditorProps) {
         md += `> ${text}\n\n`;
       } else if (node.type === "codeBlock") {
         md += `\`\`\`\n${text}\n\`\`\`\n\n`;
+      } else if (node.type === "image") {
+        md += `![${node.attrs?.alt || "Image"}](${node.attrs?.src})\n\n`;
+      } else if (node.type === "table") {
+        if (node.content && Array.isArray(node.content)) {
+          let isFirst = true;
+          for (const row of node.content) {
+            if (row.content && Array.isArray(row.content)) {
+              const cells = row.content.map((c: any) => {
+                return c.content?.[0]?.content?.map((t: any) => t.text).join("") || "";
+              });
+              md += `| ${cells.join(" | ")} |\n`;
+              if (isFirst) {
+                md += `| ${cells.map(() => "---").join(" | ")} |\n`;
+                isFirst = false;
+              }
+            }
+          }
+          md += "\n";
+        }
       } else {
         md += `${text}\n\n`;
       }
