@@ -4,6 +4,7 @@ export interface IDocument extends MongooseDocument {
   title: string;
   content: Record<string, unknown>;
   owner: Types.ObjectId;
+  isPinned: boolean;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -36,6 +37,11 @@ const DocumentSchema = new Schema<IDocument>(
       required: [true, "Owner is required"],
       index: true,
     },
+    isPinned: {
+      type: Boolean,
+      default: false,
+      index: true,
+    },
   },
   {
     timestamps: true,
@@ -54,8 +60,7 @@ const DocumentSchema = new Schema<IDocument>(
 );
 
 // Index for searching and sorting
-DocumentSchema.index({ owner: 1, updatedAt: -1 });
+DocumentSchema.index({ owner: 1, isPinned: -1, updatedAt: -1 });
 
 export const DocumentModel: Model<IDocument> =
   mongoose.models.Document || mongoose.model<IDocument>("Document", DocumentSchema);
-

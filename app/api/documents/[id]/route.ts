@@ -48,6 +48,7 @@ export async function GET(req: NextRequest, { params }: RouteParams) {
         title: doc.title,
         content: doc.content,
         isOwner,
+        isPinned: !!doc.isPinned,
         permission: isOwner ? "EDIT" : shareRecord?.permission || "EDIT",
         owner: {
           id: ownerObj._id ? ownerObj._id.toString() : ownerObj.toString(),
@@ -77,7 +78,7 @@ export async function PATCH(req: NextRequest, { params }: RouteParams) {
     }
 
     const body = await req.json();
-    const { title, content } = body;
+    const { title, content, isPinned } = body;
 
     await connectToDatabase();
 
@@ -114,6 +115,17 @@ export async function PATCH(req: NextRequest, { params }: RouteParams) {
       doc.title = title.trim() || "Untitled document";
     }
 
+    // Only owner can pin document
+    if (typeof isPinned === "boolean") {
+      if (!isOwner) {
+        return NextResponse.json(
+          { error: "Only the document owner can pin this document." },
+          { status: 403 }
+        );
+      }
+      doc.isPinned = isPinned;
+    }
+
     // Owner or shared editor can update content
     if (content !== undefined) {
       doc.content = content;
@@ -128,6 +140,7 @@ export async function PATCH(req: NextRequest, { params }: RouteParams) {
         title: doc.title,
         content: doc.content,
         isOwner,
+        isPinned: !!doc.isPinned,
         permission: isOwner ? "EDIT" : shareRecord?.permission || "EDIT",
         updatedAt: doc.updatedAt,
       },

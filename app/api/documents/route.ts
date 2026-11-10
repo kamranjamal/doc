@@ -14,9 +14,9 @@ export async function GET() {
 
     await connectToDatabase();
 
-    // 1. Fetch owned documents
+    // 1. Fetch owned documents sorted by isPinned (desc) then updatedAt (desc)
     const ownedDocs = await DocumentModel.find({ owner: user._id })
-      .sort({ updatedAt: -1 })
+      .sort({ isPinned: -1, updatedAt: -1 })
       .populate("owner", "name email avatar");
 
     // 2. Fetch shared documents via DocumentShare
@@ -34,6 +34,7 @@ export async function GET() {
       title: doc.title,
       content: doc.content,
       isOwner,
+      isPinned: !!doc.isPinned,
       permission,
       owner: doc.owner
         ? {
@@ -58,9 +59,11 @@ export async function GET() {
     return NextResponse.json({
       owned,
       shared,
-      all: [...owned, ...shared].sort(
-        (a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime()
-      ),
+      all: [...owned, ...shared].sort((a, b) => {
+        if (a.isPinned && !b.isPinned) return -1;
+        if (!a.isPinned && b.isPinned) return 1;
+        return new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime();
+      }),
     });
   } catch (error: unknown) {
     console.error("List documents error:", error);
@@ -82,7 +85,6 @@ export async function POST(req: NextRequest) {
     try {
       body = await req.json();
     } catch {
-      // Empty body is acceptable for creating a blank document
       body = {};
     }
 
@@ -105,6 +107,7 @@ export async function POST(req: NextRequest) {
       title,
       content,
       owner: user._id,
+      isPinned: false,
     });
 
     return NextResponse.json(
@@ -114,6 +117,7 @@ export async function POST(req: NextRequest) {
           title: newDoc.title,
           content: newDoc.content,
           isOwner: true,
+          isPinned: false,
           permission: "EDIT",
           owner: {
             id: user._id.toString(),
@@ -136,4 +140,3 @@ export async function POST(req: NextRequest) {
     );
   }
 }
-

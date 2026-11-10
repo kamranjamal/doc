@@ -24,8 +24,8 @@ export function AppHeader() {
         setDropdownOpen(false);
       }
     }
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+    window.document.addEventListener("mousedown", handleClickOutside);
+    return () => window.document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   const handleSwitch = async (email: string) => {
@@ -42,12 +42,20 @@ export function AppHeader() {
     }
   };
 
+  const getInitials = (fullName: string) => {
+    const parts = fullName.trim().split(" ");
+    if (parts.length >= 2) {
+      return `${parts[0][0]}${parts[parts.length - 1][0]}`.toUpperCase();
+    }
+    return (parts[0]?.[0] || "U").toUpperCase();
+  };
+
   return (
-    <header className="h-16 border-b border-[#D5C9B8] bg-[#FAF7F2] px-4 sm:px-8 flex items-center justify-between sticky top-0 z-50 shadow-sm">
+    <header className="h-16 border-b border-[#D5C9B8] bg-[#FAF7F2] px-4 sm:px-8 flex items-center justify-between sticky top-0 z-50 shadow-sm select-none font-['Poppins',sans-serif]">
       {/* Brand with Tactile Copper Seal */}
       <div className="flex items-center gap-3">
-        <div className="w-9 h-9 rounded-xl tactile-avatar-ring flex items-center justify-center shadow-md">
-          <FileText className="w-4 h-4 text-white" />
+        <div className="w-9 h-9 rounded-xl tactile-avatar-ring flex items-center justify-center shadow-md shrink-0">
+          <FileText className="w-5 h-5 text-white" />
         </div>
         <div>
           <div className="flex items-center gap-2">
@@ -64,49 +72,58 @@ export function AppHeader() {
         </div>
       </div>
 
-      {/* User Identity & Switcher */}
+      {/* User Identity & Switcher (Fixed Contrast & Readability) */}
       {user && (
         <div className="flex items-center gap-3">
-          {/* User switcher dropdown */}
           <div className="relative" ref={dropdownRef}>
             <button
               type="button"
               onClick={() => setDropdownOpen(!dropdownOpen)}
-              className="flex items-center gap-3 px-3.5 py-1.5 rounded-xl bg-[#FFFFFF] hover:bg-[#FAF7F2] border border-[#D5C9B8] tactile-elevation-1 transition-all text-left cursor-pointer"
+              className="flex items-center gap-3 px-3.5 py-1.5 rounded-xl bg-[#FFFFFF] hover:bg-[#FAF7F2] border-2 border-[#D5C9B8] hover:border-[#C97D52] tactile-elevation-1 transition-all text-left cursor-pointer shadow-sm group"
             >
-              <div className="w-8 h-8 rounded-full tactile-avatar-ring flex items-center justify-center text-xs font-bold text-white shrink-0">
-                {user.name.split(" ").map((n) => n[0]).join("")}
+              {/* High-Contrast Concentric Copper Avatar */}
+              <div className="w-8 h-8 rounded-full tactile-avatar-ring flex items-center justify-center text-xs font-extrabold text-white shrink-0 tracking-wider">
+                {getInitials(user.name)}
               </div>
+
               <div className="hidden sm:block text-left">
-                <div className="text-xs font-bold text-[#2D251E] leading-tight">
+                <div className="text-xs font-extrabold text-[#2D251E] leading-tight group-hover:text-[#C97D52] transition-colors">
                   {user.name}
                 </div>
                 <div className="text-[11px] text-[#74675B] font-mono leading-none mt-0.5">
                   {user.email}
                 </div>
               </div>
-              <ChevronDown className="w-4 h-4 text-[#74675B]" />
+
+              <ChevronDown className="w-4 h-4 text-[#74675B] group-hover:text-[#2D251E] transition-colors" />
             </button>
 
             {/* Dropdown Menu (Styled as Raised Tactile Paper Dialog) */}
             {dropdownOpen && (
               <div className="absolute right-0 mt-2 w-80 rounded-2xl bg-[#FAF7F2] border-2 border-[#D5C9B8] tactile-elevation-3 p-3 z-50 animate-in fade-in zoom-in-95 duration-100">
-                <div className="px-3 py-2 border-b border-[#D5C9B8] mb-2 bg-[#FFFFFF] rounded-xl tactile-elevation-1">
-                  <div className="text-xs font-bold text-[#2D251E]">
-                    {user.name}
+                <div className="px-3 py-2.5 border-b border-[#D5C9B8] mb-2 bg-[#FFFFFF] rounded-xl tactile-elevation-1">
+                  <div className="flex items-center gap-2.5">
+                    <div className="w-7 h-7 rounded-full tactile-avatar-ring flex items-center justify-center text-xs font-extrabold text-white shrink-0">
+                      {getInitials(user.name)}
+                    </div>
+                    <div>
+                      <div className="text-xs font-extrabold text-[#2D251E]">
+                        {user.name}
+                      </div>
+                      <div className="text-[11px] text-[#74675B] font-mono truncate">
+                        {user.email}
+                      </div>
+                    </div>
                   </div>
-                  <div className="text-[11px] text-[#74675B] font-mono truncate mt-0.5">
-                    {user.email}
-                  </div>
-                  <div className="mt-1 flex items-center gap-1.5 text-[10px] font-bold text-[#4E9A68]">
+                  <div className="mt-2 flex items-center gap-1.5 text-[10px] font-bold text-[#4E9A68] bg-[#EBF5EE] px-2 py-0.5 rounded-md border border-[#4E9A68]/30">
                     <UserCheck className="w-3 h-3" />
                     <span>Active Authenticated Session</span>
                   </div>
                 </div>
 
                 <div className="py-1">
-                  <div className="px-2 py-1 text-[10px] font-bold uppercase tracking-wider text-[#9C8E80]">
-                    Switch Demo User (P0 Requirement)
+                  <div className="px-2 py-1 text-[10px] font-extrabold uppercase tracking-wider text-[#9C8E80]">
+                    Switch Demo User (P0 Specification)
                   </div>
                   <div className="space-y-1.5 mt-1">
                     {demoAccounts.map((account) => {
@@ -120,20 +137,20 @@ export function AppHeader() {
                           onClick={() => handleSwitch(account.email)}
                           className={`w-full text-left p-2.5 rounded-xl text-xs flex items-center justify-between transition-all cursor-pointer ${
                             isCurrent
-                              ? "bg-[#FFFFFF] border border-[#C97D52] tactile-elevation-1"
+                              ? "bg-[#FFFFFF] border-2 border-[#C97D52] tactile-elevation-1"
                               : "hover:bg-[#EFE8DE] border border-transparent"
                           }`}
                         >
                           <div className="flex items-center gap-2.5">
-                            <div className="w-6 h-6 rounded-full tactile-avatar-ring flex items-center justify-center text-[10px] font-bold text-white shrink-0">
-                              {account.name.split(" ").map((n) => n[0]).join("")}
+                            <div className="w-6 h-6 rounded-full tactile-avatar-ring flex items-center justify-center text-[10px] font-extrabold text-white shrink-0">
+                              {getInitials(account.name)}
                             </div>
                             <div>
                               <div className="flex items-center gap-1.5">
-                                <span className="font-bold text-[#2D251E]">
+                                <span className="font-extrabold text-[#2D251E]">
                                   {account.name}
                                 </span>
-                                <span className="text-[9px] px-1.5 py-0.2 rounded font-semibold text-[#8C4F2A] bg-[#F7EBE4]">
+                                <span className="text-[9px] px-1.5 py-0.2 rounded font-bold text-[#8C4F2A] bg-[#F7EBE4]">
                                   {account.role}
                                 </span>
                               </div>

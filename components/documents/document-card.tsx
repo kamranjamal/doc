@@ -11,6 +11,7 @@ import {
   ShieldCheck,
   Users,
   ExternalLink,
+  Pin,
 } from "lucide-react";
 
 export interface DocumentItem {
@@ -18,6 +19,7 @@ export interface DocumentItem {
   title: string;
   content: any;
   isOwner: boolean;
+  isPinned?: boolean;
   permission: string;
   owner: {
     id: string;
@@ -35,6 +37,7 @@ interface DocumentCardProps {
   onRename: (doc: DocumentItem) => void;
   onDelete: (doc: DocumentItem) => void;
   onShare: (doc: DocumentItem) => void;
+  onTogglePin?: (doc: DocumentItem) => void;
 }
 
 export function DocumentCard({
@@ -43,6 +46,7 @@ export function DocumentCard({
   onRename,
   onDelete,
   onShare,
+  onTogglePin,
 }: DocumentCardProps) {
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
@@ -82,8 +86,20 @@ export function DocumentCard({
   return (
     <div
       onClick={() => onOpen(docItem)}
-      className="tactile-elevation-1 hover:tactile-elevation-2 rounded-2xl p-4 bg-[#FFFFFF] border border-[#E2D9CC] hover:border-[#C97D52]/60 transition-all cursor-pointer flex flex-col justify-between group relative select-none font-['Poppins',sans-serif]"
+      className={`tactile-elevation-1 hover:tactile-elevation-2 rounded-2xl p-4.5 bg-[#FFFFFF] transition-all cursor-pointer flex flex-col justify-between group relative select-none font-['Poppins',sans-serif] ${
+        docItem.isPinned
+          ? "border-2 border-[#C97D52] shadow-md shadow-[#C97D52]/10"
+          : "border border-[#E2D9CC] hover:border-[#C97D52]/60"
+      }`}
     >
+      {/* Pinned ribbon badge if pinned */}
+      {docItem.isPinned && (
+        <div className="absolute -top-2.5 right-6 bg-[#C97D52] text-white text-[9px] font-bold px-2 py-0.5 rounded-full flex items-center gap-1 shadow-sm">
+          <Pin className="w-2.5 h-2.5 fill-white" />
+          <span>PINNED</span>
+        </div>
+      )}
+
       <div>
         {/* Top Header: Icon + Badge + Menu */}
         <div className="flex items-start justify-between gap-2 mb-3">
@@ -92,6 +108,22 @@ export function DocumentCard({
           </div>
 
           <div className="flex items-center gap-1.5" onClick={(e) => e.stopPropagation()}>
+            {/* Quick Pin Toggle Button */}
+            {docItem.isOwner && onTogglePin && (
+              <button
+                type="button"
+                onClick={() => onTogglePin(docItem)}
+                className={`w-7 h-7 rounded-lg flex items-center justify-center transition-all cursor-pointer ${
+                  docItem.isPinned
+                    ? "text-[#C97D52] bg-[#F7EBE4] border border-[#C87B50]/30"
+                    : "text-[#9C8E80] hover:text-[#C97D52] hover:bg-[#EFE8DE]"
+                }`}
+                title={docItem.isPinned ? "Unpin document" : "Pin document"}
+              >
+                <Pin className={`w-3.5 h-3.5 ${docItem.isPinned ? "fill-[#C97D52]" : ""}`} />
+              </button>
+            )}
+
             <span
               className={`text-[10px] px-2 py-0.5 rounded-md font-bold font-mono ${
                 docItem.isOwner
@@ -128,6 +160,20 @@ export function DocumentCard({
 
                   {docItem.isOwner && (
                     <>
+                      {onTogglePin && (
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setMenuOpen(false);
+                            onTogglePin(docItem);
+                          }}
+                          className="w-full text-left px-3 py-1.5 text-xs font-semibold text-[#2D251E] hover:bg-[#EFE8DE] flex items-center gap-2 cursor-pointer"
+                        >
+                          <Pin className="w-3.5 h-3.5 text-[#C97D52]" />
+                          <span>{docItem.isPinned ? "Unpin Document" : "Pin Document"}</span>
+                        </button>
+                      )}
+
                       <button
                         type="button"
                         onClick={() => {

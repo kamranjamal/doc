@@ -13,9 +13,6 @@ import {
   AlertCircle,
   Loader2,
   Users,
-  Compass,
-  Layers,
-  Sliders,
 } from "lucide-react";
 
 export function AuthView() {
@@ -70,8 +67,16 @@ export function AuthView() {
     }
   };
 
+  const getInitials = (fullName: string) => {
+    const parts = fullName.trim().split(" ");
+    if (parts.length >= 2) {
+      return `${parts[0][0]}${parts[parts.length - 1][0]}`.toUpperCase();
+    }
+    return (parts[0]?.[0] || "U").toUpperCase();
+  };
+
   return (
-    <div className="min-h-screen bg-[#F4EFEA] text-[#2D251E] flex flex-col justify-center items-center px-4 py-10 relative overflow-hidden select-none">
+    <div className="min-h-screen bg-[#F4EFEA] text-[#2D251E] flex flex-col justify-center items-center px-4 py-10 relative overflow-hidden select-none font-['Poppins',sans-serif]">
       {/* Neo-Skeuomorphic Board Header (Matching Reference Image) */}
       <div className="w-full max-w-xl mb-6">
         <div className="flex items-center justify-between border-b-2 border-[#D5C9B8] pb-3 mb-2">
@@ -118,7 +123,7 @@ export function AuthView() {
             </div>
           </div>
 
-          {/* Tactile Inset Tabs (Matching Styleguide Navigation Tabs) */}
+          {/* Tactile Inset Tabs */}
           <div className="tactile-inset p-1.5 rounded-xl flex items-center gap-1.5 mb-6">
             <button
               type="button"
@@ -126,7 +131,7 @@ export function AuthView() {
                 setMode("login");
                 setError(null);
               }}
-              className={`flex-1 py-2 px-3 text-xs font-bold rounded-lg transition-all flex items-center justify-center gap-1.5 ${
+              className={`flex-1 py-2 px-3 text-xs font-bold rounded-lg transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
                 mode === "login"
                   ? "bg-[#FFFFFF] text-[#2D251E] tactile-elevation-1 border border-[#C97D52]/40"
                   : "text-[#74675B] hover:text-[#2D251E]"
@@ -146,7 +151,7 @@ export function AuthView() {
                 setMode("register");
                 setError(null);
               }}
-              className={`flex-1 py-2 px-3 text-xs font-bold rounded-lg transition-all flex items-center justify-center gap-1.5 ${
+              className={`flex-1 py-2 px-3 text-xs font-bold rounded-lg transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
                 mode === "register"
                   ? "bg-[#FFFFFF] text-[#2D251E] tactile-elevation-1 border border-[#C97D52]/40"
                   : "text-[#74675B] hover:text-[#2D251E]"
@@ -243,7 +248,7 @@ export function AuthView() {
               </div>
             </div>
 
-            {/* Action Buttons Row matching "Submit Order" and "Cancel" in Reference Image */}
+            {/* Action Buttons Row */}
             <div className="pt-2 flex flex-col sm:flex-row gap-3">
               <button
                 type="submit"
@@ -262,7 +267,7 @@ export function AuthView() {
                   </>
                 ) : (
                   <>
-                    <span>Submit Order / Account</span>
+                    <span>Create Account</span>
                     <ArrowRight className="w-4 h-4 text-white" />
                   </>
                 )}
@@ -284,7 +289,7 @@ export function AuthView() {
           </form>
         </div>
 
-        {/* Demo Accounts Section - Styled as "DATA DISPLAY / AVATARS" from Reference Board */}
+        {/* Demo Accounts Section - Styled as "DATA DISPLAY / AVATARS" */}
         <div className="tactile-elevation-1 rounded-2xl p-5 sm:p-6 bg-[#FAF7F2] border border-[#E2D9CC]">
           <div className="flex items-center justify-between mb-3 border-b border-[#E2D9CC] pb-2.5">
             <div className="flex items-center gap-2">
@@ -313,9 +318,9 @@ export function AuthView() {
                   className="p-3.5 rounded-xl bg-[#FFFFFF] border border-[#E2D9CC] tactile-elevation-1 flex flex-col sm:flex-row sm:items-center justify-between gap-3 hover:border-[#C97D52] transition-all"
                 >
                   <div className="flex items-center gap-3">
-                    {/* Concentric tactile avatar medal */}
-                    <div className="w-9 h-9 rounded-full tactile-avatar-ring flex items-center justify-center text-xs font-bold text-white shadow-sm shrink-0">
-                      {account.name.split(" ").map((n) => n[0]).join("")}
+                    {/* Concentric tactile avatar medal with crisp initials */}
+                    <div className="w-9 h-9 rounded-full tactile-avatar-ring flex items-center justify-center text-xs font-extrabold text-white shadow-sm shrink-0 tracking-wider">
+                      {getInitials(account.name)}
                     </div>
 
                     <div>
@@ -357,7 +362,7 @@ export function AuthView() {
           </div>
         </div>
 
-        {/* Tactile System Micro-Legend (Reference Image Foundations) */}
+        {/* Tactile System Micro-Legend */}
         <div className="flex flex-wrap items-center justify-between gap-2 text-[11px] text-[#74675B] px-2">
           <div className="flex items-center gap-1.5 font-medium">
             <span className="w-2.5 h-2.5 rounded-sm bg-[#C97D52] shadow-sm inline-block" />
