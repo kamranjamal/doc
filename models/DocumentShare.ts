@@ -3,7 +3,7 @@ import mongoose, { Schema, Document as MongooseDocument, Model, Types } from "mo
 export interface IDocumentShare extends MongooseDocument {
   documentId: Types.ObjectId;
   userId: Types.ObjectId;
-  permission: "EDIT" | "VIEW";
+  permission: "EDIT" | "COMMENT" | "VIEW";
   createdAt: Date;
   updatedAt: Date;
 }
@@ -24,7 +24,7 @@ const DocumentShareSchema = new Schema<IDocumentShare>(
     },
     permission: {
       type: String,
-      enum: ["EDIT", "VIEW"],
+      enum: ["EDIT", "COMMENT", "VIEW"],
       default: "EDIT",
     },
   },
@@ -46,6 +46,11 @@ const DocumentShareSchema = new Schema<IDocumentShare>(
 
 // Compound unique index ensuring no duplicate shares
 DocumentShareSchema.index({ documentId: 1, userId: 1 }, { unique: true });
+
+// In development, ensure schema updates (e.g. enum additions) are reflected
+if (process.env.NODE_ENV === "development" && mongoose.models.DocumentShare) {
+  delete (mongoose.models as Record<string, unknown>).DocumentShare;
+}
 
 export const DocumentShareModel: Model<IDocumentShare> =
   mongoose.models.DocumentShare ||

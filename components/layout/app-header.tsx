@@ -58,16 +58,11 @@ export function AppHeader() {
           <FileText className="w-5 h-5 text-white" />
         </div>
         <div>
-          <div className="flex items-center gap-2">
-            <span className="font-extrabold text-base text-[#2D251E] tracking-tight">
-              Draftly
-            </span>
-            <span className="text-[10px] px-2 py-0.5 rounded-full font-bold font-mono text-[#8C4F2A] bg-[#F7EBE4] border border-[#C87B50]/40">
-              Tactile Kit
-            </span>
-          </div>
-          <div className="text-[10px] text-[#74675B] font-medium leading-none mt-0.5">
-            MongoDB Neo-Skeuomorphic System
+          <span className="font-extrabold text-lg text-[#2D251E] tracking-tight">
+            Draftly
+          </span>
+          <div className="text-[11px] text-[#74675B] font-medium leading-none">
+            Team Workspace
           </div>
         </div>
       </div>

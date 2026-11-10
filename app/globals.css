@@ -456,92 +456,83 @@ body {
                             cursor: pointer !important;
                           }
 
-                          /* ========================================================= */
-                          /* Tiptap Table Styles (Neo-Skeuomorphic Board Inset Table)  */
-                          /* ========================================================= */
-                          .ProseMirror table,
-                          .tiptap table {
-                            border-collapse: separate !important;
-                            border-spacing: 0 !important;
-                            margin: 1.5rem 0 !important;
-                            overflow: hidden !important;
-                            width: 100% !important;
-                            border-radius: 0.75rem !important;
-                            border: 1.5px solid #D5C9B8 !important;
-                            box-shadow: 
-                              0 2px 6px rgba(70, 50, 35, 0.06),
-                              inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
-                          }
+/* ========================================================= */
+/* Tiptap Table Styles (Neo-Skeuomorphic Board Inset Table)  */
+/* ========================================================= */
+.ProseMirror table,
+.tiptap table {
+  border-collapse: collapse !important;
+  margin: 1.5rem 0 !important;
+  width: 100% !important;
+  border-radius: 0.5rem !important;
+  border: 2px solid #C87B50 !important;
+  overflow: hidden !important;
+  box-shadow: 0 2px 6px rgba(70, 50, 35, 0.08) !important;
+}
 
-                          .ProseMirror th,
-                          .tiptap th {
-                            background-color: #EFE8DE !important;
-                            font-weight: 700 !important;
-                            text-align: left !important;
-                            color: #74675B !important;
-                            font-size: 0.85rem !important;
-                            text-transform: uppercase !important;
-                            letter-spacing: 0.05em !important;
-                            padding: 0.75rem 1rem !important;
-                            border-bottom: 2px solid #D5C9B8 !important;
-                            border-right: 1px solid #D5C9B8 !important;
-                            position: relative !important;
-                          }
+.ProseMirror th,
+.tiptap th {
+  background-color: #EFE8DE !important;
+  font-weight: 700 !important;
+  text-align: left !important;
+  color: #2D251E !important;
+  font-size: 0.85rem !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.05em !important;
+  padding: 0.75rem 1rem !important;
+  border: 1.5px solid #D5C9B8 !important;
+  min-height: 2.5rem !important;
+  position: relative !important;
+}
 
-                          .ProseMirror th:last-child,
-                          .tiptap th:last-child {
-                            border-right: none !important;
-                          }
+.ProseMirror td,
+.tiptap td {
+  padding: 0.75rem 1rem !important;
+  border: 1.5px solid #D5C9B8 !important;
+  color: #2D251E !important;
+  font-size: 0.925rem !important;
+  vertical-align: top !important;
+  position: relative !important;
+  background-color: #FFFFFF !important;
+  min-height: 2.5rem !important;
+  transition: background-color 120ms ease !important;
+}
 
-                          .ProseMirror td,
-                          .tiptap td {
-                            padding: 0.75rem 1rem !important;
-                            border-bottom: 1px solid #E2D9CC !important;
-                            border-right: 1px solid #E2D9CC !important;
-                            color: #2D251E !important;
-                            font-size: 0.925rem !important;
-                            vertical-align: top !important;
-                            position: relative !important;
-                            background-color: #FFFFFF !important;
-                            transition: background-color 120ms ease !important;
-                          }
+.ProseMirror th > p,
+.tiptap th > p,
+.ProseMirror td > p,
+.tiptap td > p {
+  margin: 0 !important;
+  min-height: 1.25rem !important;
+  line-height: 1.5 !important;
+}
 
-                          .ProseMirror td:last-child,
-                          .tiptap td:last-child {
-                            border-right: none !important;
-                          }
+.ProseMirror tr:hover td,
+.tiptap tr:hover td {
+  background-color: #FAF7F2 !important;
+}
 
-                          .ProseMirror tr:last-child td,
-                          .tiptap tr:last-child td {
-                            border-bottom: none !important;
-                          }
+.ProseMirror .selectedCell:after,
+.tiptap .selectedCell:after {
+  z-index: 2;
+  position: absolute;
+  content: "";
+  left: 0; right: 0; top: 0; bottom: 0;
+  background: rgba(201, 125, 82, 0.18);
+  pointer-events: none;
+  border: 2px solid #C97D52;
+}
 
-                          .ProseMirror tr:hover td,
-                          .tiptap tr:hover td {
-                            background-color: #FAF7F2 !important;
-                          }
-
-                          .ProseMirror .selectedCell:after,
-                          .tiptap .selectedCell:after {
-                            z-index: 2;
-                            position: absolute;
-                            content: "";
-                            left: 0; right: 0; top: 0; bottom: 0;
-                            background: rgba(201, 125, 82, 0.15);
-                            pointer-events: none;
-                            border: 1.5px solid #C97D52;
-                          }
-
-                          .ProseMirror .column-resize-handle,
-                          .tiptap .column-resize-handle {
-                            position: absolute;
-                            right: -2px;
-                            top: 0;
-                            bottom: -2px;
-                            width: 4px;
-                            background-color: #C97D52;
-                            pointer-events: none;
-                          }
+.ProseMirror .column-resize-handle,
+.tiptap .column-resize-handle {
+  position: absolute;
+  right: -2px;
+  top: 0;
+  bottom: -2px;
+  width: 4px;
+  background-color: #C97D52;
+  pointer-events: none;
+}
 
                           /* Image Formatting with Tactile Framing */
                           .ProseMirror img,

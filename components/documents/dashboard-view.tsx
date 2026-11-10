@@ -8,6 +8,9 @@ import { ImportDialog } from "../import/import-dialog";
 import { TemplateDialog } from "./template-dialog";
 import { DocumentTemplate } from "@/lib/templates";
 import { useToast } from "../ui/toast";
+import { Modal } from "../ui/modal";
+import { Button } from "../ui/button";
+import { Input } from "../ui/input";
 import {
   FileText,
   Plus,
@@ -218,12 +221,12 @@ export function DashboardView({ onOpenDocument }: DashboardViewProps) {
         <div className="space-y-6">
           {/* Workspace Status */}
           <div className="p-3 rounded-xl bg-[#FFFFFF] border border-[#E2D9CC] tactile-elevation-1">
-            <div className="flex items-center gap-2 text-xs font-bold text-[#2D251E] mb-1">
-              <span className="w-2.5 h-2.5 rounded-full bg-[#4E9A68] animate-pulse" />
-              <span>MongoDB Workspace</span>
+            <div className="flex items-center gap-2 text-xs font-bold text-[#2D251E] mb-0.5">
+              <span className="w-2 h-2 rounded-full bg-[#4E9A68]" />
+              <span>Workspace</span>
             </div>
-            <p className="text-[11px] text-[#74675B] font-mono leading-none">
-              Identity: {user?.name.split(" ")[0]}
+            <p className="text-[11px] text-[#74675B] font-medium truncate">
+              {user?.email}
             </p>
           </div>
 
@@ -313,7 +316,7 @@ export function DashboardView({ onOpenDocument }: DashboardViewProps) {
         {/* Demo User Switcher Section in Sidebar */}
         <div className="pt-4 border-t border-[#D5C9B8] mt-6">
           <div className="text-[10px] font-bold uppercase tracking-wider text-[#9C8E80] mb-2">
-            Switch Demo User (P0)
+            Team Accounts
           </div>
           <div className="space-y-1">
             {demoAccounts.map((account) => {
@@ -340,35 +343,28 @@ export function DashboardView({ onOpenDocument }: DashboardViewProps) {
 
       {/* Main Content Area */}
       <main className="flex-1 p-4 sm:p-8 max-w-6xl mx-auto w-full">
-        {/* Reviewer Quick Tour Banner (Collapsible Evaluator Aid) */}
+        {/* Reviewer Quick Tour Banner */}
         {showTourBanner && (
-          <div className="mb-6 p-4 rounded-2xl bg-[#FFFFFF] border-2 border-[#C97D52]/40 tactile-elevation-2 relative select-none animate-in fade-in duration-200">
+          <div className="mb-6 p-4 rounded-2xl bg-[#FFFFFF] border border-[#D5C9B8] tactile-elevation-2 relative select-none animate-in fade-in duration-200">
             <button
               type="button"
               onClick={() => setShowTourBanner(false)}
               className="absolute right-3.5 top-3.5 text-[#9C8E80] hover:text-[#2D251E] p-1 cursor-pointer"
-              title="Dismiss banner"
+              title="Dismiss"
             >
               <X className="w-4 h-4" />
             </button>
 
             <div className="flex items-start gap-3 pr-8">
-              <div className="w-9 h-9 rounded-xl tactile-avatar-ring flex items-center justify-center text-white shrink-0 mt-0.5">
+              <div className="w-8 h-8 rounded-xl tactile-avatar-ring flex items-center justify-center text-white shrink-0 mt-0.5">
                 <Sparkles className="w-4 h-4" />
               </div>
               <div>
-                <div className="flex items-center gap-2">
-                  <h3 className="text-xs font-extrabold text-[#2D251E] uppercase tracking-wider">
-                    Reviewer Quick Tour (P0 Criteria in 60s)
-                  </h3>
-                  <span className="text-[10px] font-mono text-[#4E9A68] bg-[#EBF5EE] border border-[#4E9A68]/30 px-1.5 py-0.2 rounded font-bold">
-                    MongoDB Ready
-                  </span>
-                </div>
+                <h3 className="text-xs font-bold text-[#2D251E]">
+                  Quick Workspace Guide
+                </h3>
                 <p className="text-xs text-[#74675B] mt-1 leading-relaxed">
-                  <strong>1. Create & Format:</strong> Click <em>New Document</em> &rarr; test rich formatting (H1/H2, Bold, Lists, Autosave).<br />
-                  <strong>2. Share Flow:</strong> Click <em>Share</em> &rarr; add <strong>Sam Taylor</strong>.<br />
-                  <strong>3. Verify Access:</strong> Switch to <strong>Sam Taylor</strong> (document opens under <em>Shared With Me</em>); switch to <strong>Jordan Lee</strong> (access is strictly denied with 403 Forbidden).
+                  <strong>Create & Edit:</strong> Click <em>New Document</em> to test rich formatting and real-time persistence. &bull; <strong>Sharing:</strong> Share with team members (Sam Taylor) and test role permissions. &bull; <strong>Access Control:</strong> Unrelated users receive strict 403 Forbidden.
                 </p>
               </div>
             </div>
@@ -378,18 +374,10 @@ export function DashboardView({ onOpenDocument }: DashboardViewProps) {
         {/* Header Greeting & Primary Action */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
           <div>
-            <div className="flex items-center gap-2">
-              <span className="tactile-tag text-[10px] px-2 py-0.5 rounded">
-                Workspace Dashboard
-              </span>
-              <span className="text-[10px] font-mono text-[#C97D52] bg-[#F7EBE4] px-2 py-0.5 rounded-full font-bold">
-                Neo-Skeuomorphic System
-              </span>
-            </div>
-            <h1 className="text-2xl sm:text-3xl font-extrabold text-[#2D251E] tracking-tight mt-1">
+            <h1 className="text-2xl sm:text-3xl font-extrabold text-[#2D251E] tracking-tight">
               Welcome back, {user?.name}
             </h1>
-            <p className="text-xs text-[#74675B] mt-0.5">
+            <p className="text-xs sm:text-sm text-[#74675B] mt-1">
               Create, organize, format, and share team documents without clutter.
             </p>
           </div>
@@ -579,93 +567,88 @@ export function DashboardView({ onOpenDocument }: DashboardViewProps) {
       />
 
       {/* Rename Dialog (Modal) */}
-      {renameDoc && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm animate-in fade-in duration-150">
-          <div className="w-full max-w-md bg-[#FAF7F2] border-2 border-[#D5C9B8] tactile-elevation-3 rounded-2xl p-6 relative">
-            <h2 className="text-base font-extrabold text-[#2D251E] mb-2 flex items-center gap-2">
-              <Edit2 className="w-4 h-4 text-[#C97D52]" />
-              <span>Rename Document</span>
-            </h2>
-            <p className="text-xs text-[#74675B] mb-4">
-              Enter a new title for this document. Only the owner can rename documents.
-            </p>
+      <Modal
+        isOpen={renameDoc !== null}
+        onClose={() => setRenameDoc(null)}
+        title="Rename Document"
+        subtitle="Enter a new title for this document. Only the owner can rename documents."
+        maxWidth="md"
+        icon={
+          <div className="w-9 h-9 rounded-xl tactile-avatar-ring flex items-center justify-center text-white shrink-0">
+            <Edit2 className="w-4 h-4" />
+          </div>
+        }
+      >
+        <form onSubmit={handleConfirmRename} className="space-y-4 pt-1">
+          <Input
+            value={newTitle}
+            onChange={(e) => setNewTitle(e.target.value)}
+            placeholder="Document Title"
+            required
+            autoFocus
+          />
 
-            <form onSubmit={handleConfirmRename}>
-              <div className="tactile-inset rounded-xl tactile-input-focus mb-5">
-                <input
-                  type="text"
-                  value={newTitle}
-                  onChange={(e) => setNewTitle(e.target.value)}
-                  placeholder="Document Title"
-                  required
-                  autoFocus
-                  className="w-full bg-transparent px-3.5 py-2.5 text-sm font-medium text-[#2D251E] placeholder-[#9C8E80] focus:outline-none"
-                />
-              </div>
+          <div className="flex justify-end gap-2 pt-2 border-t border-[#D5C9B8]">
+            <Button
+              type="button"
+              variant="secondary"
+              size="sm"
+              onClick={() => setRenameDoc(null)}
+            >
+              Cancel
+            </Button>
+            <Button
+              type="submit"
+              variant="primary"
+              size="sm"
+              disabled={isRenaming || !newTitle.trim()}
+              isLoading={isRenaming}
+            >
+              Save Title
+            </Button>
+          </div>
+        </form>
+      </Modal>
 
-              <div className="flex justify-end gap-3">
-                <button
-                  type="button"
-                  onClick={() => setRenameDoc(null)}
-                  className="py-2 px-4 rounded-xl text-xs font-bold tactile-btn-secondary cursor-pointer"
-                >
-                  Cancel
-                </button>
-                <button
-                  type="submit"
-                  disabled={isRenaming || !newTitle.trim()}
-                  className="py-2 px-5 rounded-xl text-xs font-bold tactile-btn-copper disabled:opacity-50 cursor-pointer flex items-center gap-1.5"
-                >
-                  {isRenaming ? (
-                    <Loader2 className="w-3.5 h-3.5 animate-spin" />
-                  ) : (
-                    <span>Save Title</span>
-                  )}
-                </button>
-              </div>
-            </form>
+      {/* Delete Confirmation Modal (Neo-Skeuomorphic Board Dialog) */}
+      <Modal
+        isOpen={deleteDoc !== null}
+        onClose={() => setDeleteDoc(null)}
+        maxWidth="sm"
+      >
+        <div className="text-center pt-2">
+          <div className="w-12 h-12 rounded-2xl bg-[#FBEBE8] border border-[#E5877A] text-[#BA4E3E] mx-auto flex items-center justify-center mb-3">
+            <Trash2 className="w-6 h-6" />
+          </div>
+          <h3 className="text-base font-extrabold text-[#2D251E] mb-1">
+            Confirm Delete
+          </h3>
+          <p className="text-xs text-[#74675B] mb-5">
+            Are you sure you want to delete <strong className="text-[#2D251E]">&quot;{deleteDoc?.title}&quot;</strong>? This action cannot be undone.
+          </p>
+
+          <div className="flex items-center justify-center gap-3">
+            <Button
+              type="button"
+              variant="secondary"
+              size="sm"
+              onClick={() => setDeleteDoc(null)}
+            >
+              Cancel
+            </Button>
+            <Button
+              type="button"
+              variant="danger"
+              size="sm"
+              disabled={isDeleting}
+              isLoading={isDeleting}
+              onClick={handleConfirmDelete}
+            >
+              Delete
+            </Button>
           </div>
         </div>
-      )}
-
-      {/* Delete Confirmation Modal (Exact "Confirm Delete" modal from Reference Board) */}
-      {deleteDoc && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm animate-in fade-in duration-150">
-          <div className="w-full max-w-sm bg-[#FAF7F2] border-2 border-[#BA4E3E]/40 tactile-elevation-3 rounded-2xl p-6 text-center relative">
-            <div className="w-12 h-12 rounded-2xl bg-[#FBEBE8] border border-[#E5877A] text-[#BA4E3E] mx-auto flex items-center justify-center mb-3">
-              <Trash2 className="w-6 h-6" />
-            </div>
-            <h3 className="text-base font-extrabold text-[#2D251E] mb-1">
-              Confirm Delete
-            </h3>
-            <p className="text-xs text-[#74675B] mb-5">
-              Are you sure you want to delete <strong className="text-[#2D251E]">&quot;{deleteDoc.title}&quot;</strong>? This action cannot be undone.
-            </p>
-
-            <div className="flex items-center justify-center gap-3">
-              <button
-                type="button"
-                onClick={() => setDeleteDoc(null)}
-                className="py-2 px-4 rounded-xl text-xs font-bold tactile-btn-secondary cursor-pointer"
-              >
-                Cancel
-              </button>
-              <button
-                type="button"
-                disabled={isDeleting}
-                onClick={handleConfirmDelete}
-                className="py-2 px-5 rounded-xl text-xs font-bold bg-[#BA4E3E] hover:bg-[#A33E30] text-white border border-[#8C2E22] transition-colors cursor-pointer shadow-sm disabled:opacity-50 flex items-center gap-1.5"
-              >
-                {isDeleting ? (
-                  <Loader2 className="w-3.5 h-3.5 animate-spin" />
-                ) : (
-                  <span>Delete</span>
-                )}
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+      </Modal>
     </div>
   );
 }
