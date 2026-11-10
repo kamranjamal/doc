@@ -64,3 +64,4 @@ DocumentCommentSchema.index({ documentId: 1, createdAt: -1 });
 export const DocumentCommentModel: Model<IDocumentComment> =
   mongoose.models.DocumentComment ||
   mongoose.model<IDocumentComment>("DocumentComment", DocumentCommentSchema);
+

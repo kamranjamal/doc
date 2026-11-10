@@ -70,3 +70,4 @@ DocumentVersionSchema.index({ documentId: 1, versionNumber: -1 });
 export const DocumentVersionModel: Model<IDocumentVersion> =
   mongoose.models.DocumentVersion ||
   mongoose.model<IDocumentVersion>("DocumentVersion", DocumentVersionSchema);
+
